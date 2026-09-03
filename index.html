@@ -6,51 +6,115 @@
 <title>葵爸解读 · 飞鹤 2025 财报：一罐 300 块的奶粉，钱都去哪了？</title>
 <script src='https://cdn.jsdelivr.net/npm/echarts@5.4.3/dist/echarts.min.js'></script>
 <style>
+  :root{
+    --brand:#1E5AA8; --brand-d:#15427d; --brand-l:#eaf1fb;
+    --ink:#15233a; --text:#34465c; --muted:#6b7889; --faint:#97a3b3;
+    --orange:#E67E22; --red:#D64545; --green:#2E9E6B; --green-l:#e9f6ef;
+    --warn-l:#fff6e8; --warn-b:#f0d49a;
+    --bg1:#eaf1f9; --bg2:#f3f6fb; --bg3:#eef2f7; --card:#ffffff;
+  }
   * { margin:0; padding:0; box-sizing:border-box; }
-  body { font-family:-apple-system,'PingFang SC','Microsoft YaHei',sans-serif; background:#f5f7fa; color:#222; line-height:1.6; }
-  .wrap { max-width:860px; margin:0 auto; padding:24px 16px 60px; }
-  header { text-align:center; padding:28px 0 10px; }
-  header h1 { font-size:24px; font-weight:800; letter-spacing:.5px; line-height:1.4; }
-  header .sub { color:#888; margin-top:8px; font-size:13px; }
-  .section { background:#fff; border-radius:14px; padding:20px; margin:16px 0; box-shadow:0 2px 12px rgba(0,0,0,.05); }
-  .section h2 { font-size:19px; border-left:4px solid #1E5AA8; padding-left:10px; margin-bottom:4px; }
-  .section-desc { color:#666; font-size:13px; margin-bottom:12px; }
-  .chart-s { font-size:13px; color:#555; background:#f0f4fa; border-radius:10px; padding:10px 12px; margin-top:10px; }
-  .cards { display:grid; grid-template-columns:repeat(auto-fit,minmax(150px,1fr)); gap:12px; }
-  .card { border:1px solid #eee; border-radius:12px; padding:14px; text-align:center; }
-  .card .k { font-size:13px; color:#777; }
-  .card .v { font-size:24px; font-weight:800; color:#1E5AA8; margin:4px 0; }
-  .card .v.red { color:#C0392B; }
-  .card .v.green { color:#27AE60; }
-  .card .d { font-size:12px; color:#999; }
-  table { width:100%; border-collapse:collapse; font-size:13px; margin-top:6px; }
-  th,td { border:1px solid #e8e8e8; padding:8px 9px; text-align:center; }
-  th { background:#1E5AA8; color:#fff; font-weight:600; }
-  tr:nth-child(even) td { background:#fafcff; }
-  td.l { text-align:left; }
-  .disclaimer { font-size:12px; color:#999; margin-top:16px; padding:12px; background:#f7f7f7; border-radius:10px; }
+  body { font-family:-apple-system,'PingFang SC','Microsoft YaHei',sans-serif;
+    background:linear-gradient(180deg,var(--bg1) 0%,var(--bg2) 230px,var(--bg3) 100%);
+    color:var(--text); line-height:1.65; -webkit-font-smoothing:antialiased; }
+  .wrap { max-width:880px; margin:0 auto; padding:26px 16px 64px; }
+
+  /* ===== Hero 门面 ===== */
+  .hero { background:linear-gradient(135deg,#174a8f 0%,#2a6fc0 58%,#3390d6 100%);
+    border-radius:18px; padding:40px 26px 30px; text-align:center; color:#fff;
+    box-shadow:0 12px 32px rgba(20,60,120,.28); position:relative; overflow:hidden; }
+  .hero::after { content:''; position:absolute; right:-70px; top:-70px; width:210px; height:210px;
+    background:rgba(255,255,255,.10); border-radius:50%; }
+  .hero::before { content:''; position:absolute; left:-50px; bottom:-60px; width:160px; height:160px;
+    background:rgba(255,255,255,.07); border-radius:50%; }
+  .hero-badge { position:relative; z-index:1; display:inline-block; background:rgba(255,255,255,.18);
+    border:1px solid rgba(255,255,255,.38); color:#fff; font-size:12px; padding:4px 14px;
+    border-radius:20px; letter-spacing:2px; margin-bottom:16px; }
+  .hero h1 { position:relative; z-index:1; font-size:27px; font-weight:800; line-height:1.35;
+    text-shadow:0 2px 12px rgba(0,0,0,.20); }
+  .hero-sub { position:relative; z-index:1; margin-top:13px; font-size:15px; color:#eaf3ff; font-weight:600; }
+  .hero-meta { position:relative; z-index:1; margin-top:8px; font-size:12px; color:rgba(255,255,255,.80); }
+
+  /* ===== Section 卡片 ===== */
+  .section { background:var(--card); border-radius:16px; padding:22px 22px; margin:18px 0;
+    box-shadow:0 6px 22px rgba(20,40,80,.07); border:1px solid rgba(30,90,168,.06); }
+  .section.tone-info  { border-top:3px solid var(--brand); }
+  .section.tone-cards { background:linear-gradient(180deg,#eaf2fd,#f4f8fe); }
+  .section.tone-good  { background:linear-gradient(180deg,#eafaf2,#f3fbf7); border-top:3px solid var(--green); }
+  .section.tone-source{ background:linear-gradient(180deg,#eef4fc,#f6f9fd); }
+  .section.tone-warn  { border-left:5px solid var(--orange); }
+  .section h2 { font-size:20px; font-weight:800; color:var(--ink); border-left:5px solid var(--brand);
+    padding-left:12px; margin-bottom:6px; letter-spacing:.3px; }
+  .section.tone-good h2 { border-left-color:var(--green); }
+  .section.tone-warn h2 { border-left-color:var(--orange); }
+  .section-desc { color:var(--muted); font-size:13.5px; margin-bottom:14px; line-height:1.7; }
+
+  /* ===== 注脚块 ===== */
+  .chart-s { font-size:13px; color:var(--text); background:linear-gradient(180deg,#f3f8fe,#f7fafe);
+    border-left:4px solid var(--brand); border-radius:0 10px 10px 0; padding:11px 14px;
+    margin-top:12px; line-height:1.7; }
+  .chart-s b { color:var(--brand-d); }
+
+  /* ===== 关键数字卡片 ===== */
+  .cards { display:grid; grid-template-columns:repeat(auto-fit,minmax(150px,1fr)); gap:14px; }
+  .card { background:#fff; border:1px solid #eef1f6; border-top:3px solid var(--brand);
+    border-radius:14px; padding:16px 12px; text-align:center; box-shadow:0 4px 14px rgba(20,40,80,.06);
+    transition:.18s; }
+  .card:hover { transform:translateY(-3px); box-shadow:0 10px 22px rgba(20,40,80,.13); }
+  .card .k { font-size:12.5px; color:var(--muted); }
+  .card .v { font-size:27px; font-weight:800; color:var(--brand); margin:6px 0 2px;
+    font-variant-numeric:tabular-nums; letter-spacing:-.5px; }
+  .card .v.red { color:var(--red); }
+  .card .v.green { color:var(--green); }
+  .card .d { font-size:11.5px; color:var(--faint); line-height:1.4; }
+
+  /* ===== 表格 ===== */
+  table { width:100%; border-collapse:separate; border-spacing:0; font-size:13px; margin-top:8px;
+    border-radius:12px; overflow:hidden; box-shadow:0 2px 10px rgba(20,40,80,.05); }
+  th,td { border:1px solid #e6ecf4; padding:10px 11px; text-align:center; }
+  th { background:linear-gradient(180deg,#1E5AA8,#17508f); color:#fff; font-weight:700; font-size:13px; }
+  tr:nth-child(even) td { background:#f5f9ff; }
+  td.l { text-align:left; color:var(--text); line-height:1.7; }
+
+  /* ===== Callout ===== */
+  .callout { border-radius:12px; padding:14px 16px; margin-top:14px; font-size:13.5px; line-height:1.75;
+    box-shadow:0 2px 10px rgba(20,40,80,.05); }
+  .callout.warn { background:var(--warn-l); border:1px solid var(--warn-b); border-left:4px solid var(--orange); color:#7a5600; }
+  .callout.good { background:var(--green-l); border:1px solid #bfe3c8; border-left:4px solid var(--green); color:#235c3e; }
+  .callout b { font-weight:800; }
+
+  /* ===== 来源区 ===== */
+  .src a { color:var(--brand); text-decoration:none; word-break:break-all; }
+  .src a:hover { text-decoration:underline; }
+  .src li { margin:7px 0; font-size:13px; color:var(--text); line-height:1.6; }
+  .src p { margin-top:12px; font-size:13.5px; }
+  .tag { display:inline-block; background:var(--brand); color:#fff; font-size:11px; padding:2px 9px;
+    border-radius:9px; margin-right:6px; font-weight:600; }
+  .tag.gray { background:#9aa7b6; }
+  .tag.orange { background:var(--orange); }
+
+  .disclaimer { font-size:12px; color:var(--muted); margin-top:20px; padding:14px 16px;
+    background:#f4f6fa; border:1px solid #e6eaf0; border-left:4px solid var(--faint);
+    border-radius:10px; line-height:1.75; }
+  .disclaimer b { color:var(--text); }
+
   .bar-box { width:100%; height:340px; }
   .bar-box-tall { width:100%; height:300px; }
-  .callout { border-radius:10px; padding:12px 14px; margin-top:12px; font-size:13px; }
-  .callout.warn { background:#fff8e6; border:1px solid #f0d890; color:#7a5c00; }
-  .callout.good { background:#eef8ef; border:1px solid #bfe3c2; color:#2E5D33; }
-  .src a { color:#1E5AA8; text-decoration:none; word-break:break-all; }
-  .src a:hover { text-decoration:underline; }
-  .src li { margin:6px 0; font-size:13px; }
-  .tag { display:inline-block; background:#1E5AA8; color:#fff; font-size:11px; padding:1px 7px; border-radius:8px; margin-right:4px; }
-  .tag.gray { background:#95a5a6; }
-  .tag.orange { background:#E67E22; }
 </style>
 </head>
 <body>
 <div class='wrap'>
-  <header>
-    <h1>一罐 300 块的奶粉，钱都去哪了？<br>葵爸拆解飞鹤 2025 财报</h1>
-    <div class='sub'>家长视角 · 消费知情权 · 数据来自港交所 2025 年报/业绩公告（均可点击复核）· 货币：人民币</div>
-  </header>
+
+  <!-- Hero 门面 -->
+  <div class='hero'>
+    <div class='hero-badge'>葵爸 · 财报拆解</div>
+    <h1>一罐 300 块的奶粉，钱都去哪了？</h1>
+    <p class='hero-sub'>飞鹤 2025 财报 · 家长视角 · 消费知情权</p>
+    <p class='hero-meta'>数据来自港交所 2025 年报 / 业绩公告（均可点击复核）· 货币：人民币</p>
+  </div>
 
   <!-- 数据来源与可信度边界 -->
-  <div class='section'>
+  <div class='section tone-info'>
     <h2>读前必看：数据从哪来、能信几分</h2>
     <p class='section-desc'>本页是博主整合公开财报资料的科普页，<b>不是投资建议，也不荐股</b>。所有数字来自交易所披露的公开年报，但解读角度是「家长消费知情权」，不是炒股逻辑。<b>下文所有拆分图均为「报表出厂口径」（工厂卖给经销商的价格），不是你在母婴店付的零售价。</b></p>
     <table>
@@ -66,7 +130,7 @@
   </div>
 
   <!-- 关键数字卡片 -->
-  <div class='section'>
+  <div class='section tone-cards'>
     <h2>先看六个关键数（2025 年）</h2>
     <div class='cards'>
       <div class='card'><div class='k'>整体毛利率</div><div class='v'>65.0%</div><div class='d'>婴配粉更高 73.5%</div></div>
@@ -130,7 +194,7 @@
   </div>
 
   <!-- 出厂价 vs 零售价边界 -->
-  <div class='section'>
+  <div class='section tone-warn'>
     <h2>致命边界：出厂价 ≠ 你付的零售价</h2>
     <p class='section-desc'>整篇财报都是「工厂卖给经销商的出厂收入」，<b>不是你在母婴店付的 300 元</b>。你付的终端价里，很大一块是经销商、母婴门店、导购提成的利润，这部分钱<b>不进飞鹤营收、不出现在飞鹤财报</b>。</p>
     <div class='callout warn'>
@@ -141,7 +205,7 @@
   </div>
 
   <!-- 给家长的结论 -->
-  <div class='section'>
+  <div class='section tone-good'>
     <h2>葵爸给家长的 4 句大实话</h2>
     <div class='callout good'>
       <b>①</b> 飞鹤是中国婴配粉老大，毛利率 65%、婴配粉 73.5%——「贵」有硬成本支撑（研发 + 全产业链自控奶源）。<br>
@@ -159,7 +223,7 @@
   </div>
 
   <!-- 数据来源 -->
-  <div class='section'>
+  <div class='section tone-source'>
     <h2>📎 数据来源（交易所原文 + 公开报道，均可点击复核）</h2>
     <p class='section-desc'>被质疑「数据哪来的」，直接甩原链接就能闭环。</p>
     <div class='src'>
