@@ -3,346 +3,186 @@
 <head>
 <meta charset='UTF-8'>
 <meta name='viewport' content='width=device-width, initial-scale=1.0'>
-<title>葵爸解读 · 飞鹤 2025 财报：一罐 300 块的奶粉，钱都去哪了？</title>
-<script src='https://cdn.jsdelivr.net/npm/echarts@5.4.3/dist/echarts.min.js'></script>
+<title>中国飞鹤 2025 财报拆解 · 婴配粉成本结构</title>
+<script src='echarts.min.js'></script>
 <style>
-  :root{
-    --brand:#1E5AA8; --brand-d:#15427d; --brand-l:#eaf1fb;
-    --ink:#15233a; --text:#34465c; --muted:#6b7889; --faint:#97a3b3;
-    --orange:#E67E22; --red:#D64545; --green:#2E9E6B; --green-l:#e9f6ef;
-    --warn-l:#fff6e8; --warn-b:#f0d49a;
-    --bg1:#eaf1f9; --bg2:#f3f6fb; --bg3:#eef2f7; --card:#ffffff;
-  }
-  * { margin:0; padding:0; box-sizing:border-box; }
-  body { font-family:-apple-system,'PingFang SC','Microsoft YaHei',sans-serif;
-    background:linear-gradient(180deg,var(--bg1) 0%,var(--bg2) 230px,var(--bg3) 100%);
-    color:var(--text); line-height:1.65; -webkit-font-smoothing:antialiased; }
-  .wrap { max-width:880px; margin:0 auto; padding:26px 16px 64px; }
-
-  /* ===== Hero 门面 ===== */
-  .hero { background:linear-gradient(135deg,#174a8f 0%,#2a6fc0 58%,#3390d6 100%);
-    border-radius:18px; padding:40px 26px 30px; text-align:center; color:#fff;
-    box-shadow:0 12px 32px rgba(20,60,120,.28); position:relative; overflow:hidden; }
-  .hero::after { content:''; position:absolute; right:-70px; top:-70px; width:210px; height:210px;
-    background:rgba(255,255,255,.10); border-radius:50%; }
-  .hero::before { content:''; position:absolute; left:-50px; bottom:-60px; width:160px; height:160px;
-    background:rgba(255,255,255,.07); border-radius:50%; }
-  .hero-badge { position:relative; z-index:1; display:inline-block; background:rgba(255,255,255,.18);
-    border:1px solid rgba(255,255,255,.38); color:#fff; font-size:12px; padding:4px 14px;
-    border-radius:20px; letter-spacing:2px; margin-bottom:16px; }
-  .hero h1 { position:relative; z-index:1; font-size:27px; font-weight:800; line-height:1.35;
-    text-shadow:0 2px 12px rgba(0,0,0,.20); }
-  .hero-sub { position:relative; z-index:1; margin-top:13px; font-size:15px; color:#eaf3ff; font-weight:600; }
-  .hero-meta { position:relative; z-index:1; margin-top:8px; font-size:12px; color:rgba(255,255,255,.80); }
-
-  /* ===== Section 卡片 ===== */
-  .section { background:var(--card); border-radius:16px; padding:22px 22px; margin:18px 0;
-    box-shadow:0 6px 22px rgba(20,40,80,.07); border:1px solid rgba(30,90,168,.06); }
-  .section.tone-info  { border-top:3px solid var(--brand); }
-  .section.tone-cards { background:linear-gradient(180deg,#eaf2fd,#f4f8fe); }
-  .section.tone-good  { background:linear-gradient(180deg,#eafaf2,#f3fbf7); border-top:3px solid var(--green); }
-  .section.tone-source{ background:linear-gradient(180deg,#eef4fc,#f6f9fd); }
-  .section.tone-warn  { border-left:5px solid var(--orange); }
-  .section h2 { font-size:20px; font-weight:800; color:var(--ink); border-left:5px solid var(--brand);
-    padding-left:12px; margin-bottom:6px; letter-spacing:.3px; }
-  .section.tone-good h2 { border-left-color:var(--green); }
-  .section.tone-warn h2 { border-left-color:var(--orange); }
-  .section-desc { color:var(--muted); font-size:13.5px; margin-bottom:14px; line-height:1.7; }
-
-  /* ===== 注脚块 ===== */
-  .chart-s { font-size:13px; color:var(--text); background:linear-gradient(180deg,#f3f8fe,#f7fafe);
-    border-left:4px solid var(--brand); border-radius:0 10px 10px 0; padding:11px 14px;
-    margin-top:12px; line-height:1.7; }
-  .chart-s b { color:var(--brand-d); }
-
-  /* ===== 关键数字卡片 ===== */
-  .cards { display:grid; grid-template-columns:repeat(auto-fit,minmax(150px,1fr)); gap:14px; }
-  .card { background:#fff; border:1px solid #eef1f6; border-top:3px solid var(--brand);
-    border-radius:14px; padding:16px 12px; text-align:center; box-shadow:0 4px 14px rgba(20,40,80,.06);
-    transition:.18s; }
-  .card:hover { transform:translateY(-3px); box-shadow:0 10px 22px rgba(20,40,80,.13); }
-  .card .k { font-size:12.5px; color:var(--muted); }
-  .card .v { font-size:27px; font-weight:800; color:var(--brand); margin:6px 0 2px;
-    font-variant-numeric:tabular-nums; letter-spacing:-.5px; }
-  .card .v.red { color:var(--red); }
-  .card .v.green { color:var(--green); }
-  .card .d { font-size:11.5px; color:var(--faint); line-height:1.4; }
-
-  /* ===== 表格 ===== */
-  table { width:100%; border-collapse:separate; border-spacing:0; font-size:13px; margin-top:8px;
-    border-radius:12px; overflow:hidden; box-shadow:0 2px 10px rgba(20,40,80,.05); }
-  th,td { border:1px solid #e6ecf4; padding:10px 11px; text-align:center; }
-  th { background:linear-gradient(180deg,#1E5AA8,#17508f); color:#fff; font-weight:700; font-size:13px; }
-  tr:nth-child(even) td { background:#f5f9ff; }
-  td.l { text-align:left; color:var(--text); line-height:1.7; }
-
-  /* ===== Callout ===== */
-  .callout { border-radius:12px; padding:14px 16px; margin-top:14px; font-size:13.5px; line-height:1.75;
-    box-shadow:0 2px 10px rgba(20,40,80,.05); }
-  .callout.warn { background:var(--warn-l); border:1px solid var(--warn-b); border-left:4px solid var(--orange); color:#7a5600; }
-  .callout.good { background:var(--green-l); border:1px solid #bfe3c8; border-left:4px solid var(--green); color:#235c3e; }
-  .callout b { font-weight:800; }
-
-  /* ===== 来源区 ===== */
-  .src a { color:var(--brand); text-decoration:none; word-break:break-all; }
-  .src a:hover { text-decoration:underline; }
-  .src li { margin:7px 0; font-size:13px; color:var(--text); line-height:1.6; }
-  .src p { margin-top:12px; font-size:13.5px; }
-  .tag { display:inline-block; background:var(--brand); color:#fff; font-size:11px; padding:2px 9px;
-    border-radius:9px; margin-right:6px; font-weight:600; }
-  .tag.gray { background:#9aa7b6; }
-  .tag.orange { background:var(--orange); }
-
-  .disclaimer { font-size:12px; color:var(--muted); margin-top:20px; padding:14px 16px;
-    background:#f4f6fa; border:1px solid #e6eaf0; border-left:4px solid var(--faint);
-    border-radius:10px; line-height:1.75; }
-  .disclaimer b { color:var(--text); }
-
-  .bar-box { width:100%; height:340px; }
-  .bar-box-tall { width:100%; height:300px; }
+  :root{ --blue:#1A4FA0; --navy:#0A1E3F; --ink:#11203a; --muted:#6b7a94; --line:#e3eaf5; --warn:#E8852B; --green:#2E9E6B; }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:'PingFang SC','Microsoft YaHei',sans-serif;color:var(--ink);background:#f4f7fc;line-height:1.6}
+  .hero{background:linear-gradient(135deg,var(--blue),var(--navy));color:#fff;padding:38px 20px 30px;text-align:center}
+  .hero .badge{display:inline-block;border:1px solid rgba(255,255,255,.5);border-radius:999px;padding:4px 14px;font-size:14px;opacity:.92}
+  .hero h1{font-size:28px;margin:14px 0 6px}
+  .hero p{opacity:.9;font-size:15px}
+  .wrap{max-width:880px;margin:0 auto;padding:18px 16px 50px}
+  .section{background:#fff;border-radius:14px;padding:20px;margin:16px 0;box-shadow:0 2px 10px rgba(20,40,80,.06)}
+  .section h2{font-size:20px;color:var(--blue);margin-bottom:8px}
+  .section-desc{color:var(--muted);font-size:14px;margin-bottom:12px}
+  .cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px}
+  .card{background:#fff;border-radius:12px;padding:14px;border-top:3px solid var(--blue);box-shadow:0 1px 6px rgba(20,40,80,.08)}
+  .card .k{font-size:13px;color:var(--muted)}
+  .card .v{font-size:26px;font-weight:800;margin-top:4px;font-variant-numeric:tabular-nums}
+  .card.warn .v{color:#d23b3b}.card.green .v{color:var(--green)}
+  .bar-box{width:100%;height:360px}
+  .chart-s{font-size:13px;color:var(--muted);margin-top:10px}
+  .callout{border-left:4px solid var(--warn);background:#fff7ee;padding:12px 14px;border-radius:8px;font-size:14px;margin-top:12px}
+  .callout b{color:var(--warn)}
+  .src a{color:var(--blue);word-break:break-all}
+  .src li{margin:6px 0;font-size:13px}
+  .tag{display:inline-block;font-size:12px;padding:2px 8px;border-radius:6px;margin-right:6px}
+  .tag.green{background:#e6f6ee;color:var(--green)}
+  .tag.gray{background:#eef1f6;color:var(--muted)}
+  .tag.warn{background:#fff1e2;color:var(--warn)}
+  footer{text-align:center;color:var(--muted);font-size:12px;padding:20px}
+  .note{font-size:12px;color:var(--muted);margin-top:8px;border-top:1px dashed var(--line);padding-top:8px}
 </style>
 </head>
 <body>
-<div class='wrap'>
 
-  <!-- Hero 门面 -->
-  <div class='hero'>
-    <div class='hero-badge'>葵爸 · 财报拆解</div>
-    <h1>一罐 300 块的奶粉，钱都去哪了？</h1>
-    <p class='hero-sub'>飞鹤 2025 财报 · 家长视角 · 消费知情权</p>
-    <p class='hero-meta'>数据来自港交所 2025 年报 / 业绩公告（均可点击复核）· 货币：人民币</p>
-  </div>
-
-  <!-- 数据来源与可信度边界 -->
-  <div class='section tone-info'>
-    <h2>读前必看：数据从哪来、能信几分</h2>
-    <p class='section-desc'>本页是博主整合公开财报资料的科普页，<b>不是投资建议，也不荐股</b>。所有数字来自交易所披露的公开年报，但解读角度是「家长消费知情权」，不是炒股逻辑。<b>下文所有拆分图均为「报表出厂口径」（工厂卖给经销商的价格），不是你在母婴店付的零售价。</b></p>
-    <table>
-      <tr><th>高可信，可直采（年报审计数据）</th><th>仅供参考，需自行核验</th></tr>
-      <tr>
-        <td class='l'><b>① 港交所披露易原文</b>：飞鹤 2025 年报、年度业绩公告（综合损益表、财务摘要、分部报告）——市场公开披露，可交叉复核，效力最高。<br><b>② 集团合并口径</b>：营收、毛利、归母净利、毛利率、销售费用率、行政费用率，均为审计数。<br><b>③ 婴配粉分部毛利率 73.5%</b>：年报分部报告披露 → 其生产端直接成本占出厂收入 <b>26.5%</b>（=100%-73.5%），经审计，可信。</td>
-        <td class='l'><b>① 研发费用 5.3 亿</b>：飞鹤年报<b>不单独披露研发费用</b>（计入行政开支），5.3 亿为第三方/业绩会估计，<b>非审计数</b>。<br><b>② 大单品金额</b>（星飞帆卓睿 65 亿等）：来自业绩会口头披露，正式年报不披露单款 SKU 销售额，无审计。<br><b>③ 券商点评 / 行业数据</b>：华创证券、欧睿、新生儿数量等，以原始年报为准。</td>
-      </tr>
-    </table>
-    <div class='callout warn'>
-      <b>一句话边界：</b>本页讲「品牌赚了你多少、钱花在哪」，<b>不代表任何购买建议或股票推荐</b>；高毛利 ≠ 高品质，也 ≠ 坑你，关键看钱花在哪。
-    </div>
-  </div>
-
-  <!-- 关键数字卡片 -->
-  <div class='section tone-cards'>
-    <h2>先看六个关键数（2025 年）</h2>
-    <div class='cards'>
-      <div class='card'><div class='k'>整体毛利率</div><div class='v'>65.0%</div><div class='d'>婴配粉更高 73.5%</div></div>
-      <div class='card'><div class='k'>营收</div><div class='v red'>181.1 亿</div><div class='d'>同比 -12.7%</div></div>
-      <div class='card'><div class='k'>归母净利</div><div class='v red'>19.4 亿</div><div class='d'>同比 -45.7%</div></div>
-      <div class='card'><div class='k'>销售费用率</div><div class='v'>~39.5%</div><div class='d'>每 100 元约 40 元卖货</div></div>
-      <div class='card'><div class='k'>研发投入（估计）</div><div class='v green'>约 5.3 亿</div><div class='d'>年报未单列，第三方估计</div></div>
-      <div class='card'><div class='k'>行业地位</div><div class='v green'>7 年</div><div class='d'>中国销量第一（欧睿）</div></div>
-    </div>
-  </div>
-
-  <!-- 图1：每100元营收去哪了 -->
-  <div class='section'>
-    <h2>核心一图：飞鹤每收 100 元「出厂收入」，钱怎么分</h2>
-    <p class='section-desc'>⚠️ 这是<b>集团全业务加权平均模型</b>（婴配粉+成人奶粉+原料粉等混合），<b>不是婴配粉单品精确账单</b>，也不是你付的零售价。注意橙色「销售费用」比绿色「净利」粗好几倍。</p>
-    <div id='chartBreak' class='bar-box'></div>
-    <div class='chart-s'>100 元营收 = 生产成本 35 元 + 毛利 65 元；毛利里再扣：销售费用 ~39.5 元、行政 9.3 元、研发 2.9 元、其他 1.7 元，最后落袋净利 11.6 元。<b>营销投入约为研发投入的 14 倍（集团整体口径）</b>。注意：35 元是<b>集团混合</b>生产成本率；婴配粉毛利率更高（73.5%），其生产端成本只占出厂收入 <b>26.5 元</b>（见下节），且婴配粉实际分摊的销售费用率大概率高于集团均值 39.5%。</div>
-  </div>
-
-  <!-- 校正：婴配粉单品出厂口径 -->
-  <div class='section'>
-    <h2>校正：婴配粉单品的「出厂成本」其实更低</h2>
-    <p class='section-desc'>上面那张 100 元图是集团平均，容易让人误以为「一罐婴配粉生产成本 35 元」。事实：婴配粉毛利率 73.5%（年报《毛利及毛利率》表「按產品類別劃分」披露），意味着其<b>生产端直接成本只占出厂收入的 26.5%</b>，比集团平均 35% 更低。</p>
-    <div id='chartInfant' class='bar-box-tall'></div>
-    <div class='chart-s'>生产端成本率：集团整体 35%（=100%-65%毛利率）vs 婴配粉 26.5%（=100%-73.5%毛利率），均为年报口径、经审计。这 26.5% 仅含原料、包材、工厂制造等生产环节，<b>不含</b>广告、渠道、研发、总部管理（那些是「期间费用」，不计入生产成本）。</div>
-    <div class='callout warn'>
-      <b>别把这张图当成「一罐奶粉完整费用账单」：</b>公开财报<b>不披露</b>婴配粉单独分摊的销售/管理/研发费用，外部无法精确还原单品全链路成本与单品净利率。本页拆分是科普简化模型，帮你看懂商业模式，不是婴配粉精确账。
-    </div>
-  </div>
-
-  <!-- 图2：毛利率 vs 销售费用率 vs 净利率 -->
-  <div class='section'>
-    <h2>高毛利，但没你想的那么「暴利」</h2>
-    <p class='section-desc'>毛利率 65% 看着高，但近 40% 是销售费用、最终净利率只有 11.6%。</p>
-    <div id='chartRates' class='bar-box-tall'></div>
-    <div class='chart-s'>对比三类「率」：毛利率 65.0% &gt; 销售费用率 ~39.5% &gt; 净利率 11.6%。飞鹤赚得多，但也花得多在渠道和广告上。</div>
-  </div>
-
-  <!-- 图3：2025双降 -->
-  <div class='section'>
-    <h2>龙头也在承压：2025 营收、净利「双降」</h2>
-    <p class='section-desc'>一边高毛利，一边利润腰斩——反差本身就值得家长了解行业现状。</p>
-    <div id='chartDrop' class='bar-box-tall'></div>
-    <div class='chart-s'>营收 207.5 亿 → 181.1 亿（-12.7%）；归母净利 35.7 亿 → 19.4 亿（-45.7%）。原因：新生儿约 790 万、行业价格战、主动去库存；但账上现金+结构性存款超 160 亿、计息借款仅约 7.3 亿，家底厚、抗周期强。</div>
-  </div>
-
-  <!-- 图4：营销 vs 研发 -->
-  <div class='section'>
-    <h2>「贵」花在哪：营销 vs 研发（集团口径）</h2>
-    <p class='section-desc'>把两项费用率放一起看，差距一目了然。注：研发费 5.3 亿为估计值（年报未单列），研发费率 2.9% 由此推算。</p>
-    <div id='chartRd' class='bar-box-tall'></div>
-    <div class='chart-s'>销售费用率 ~39.5% vs 研发费用率 ~2.9%（推算），<b>约 14 倍</b>。说明飞鹤多收的钱里，大头确实花在卖货（渠道/广告/导购），研发投入绝对值 5.3 亿（估计）不小，但占比远低于营销。婴配粉业务营销更重，该倍数只会更高。</div>
-  </div>
-
-  <!-- 图5：大单品结构 -->
-  <div class='section'>
-    <h2>钱从哪来：大单品结构</h2>
-    <p class='section-desc'>营收 181.1 亿里，两款星飞帆扛了约六成（金额据业绩会披露）。</p>
-    <div id='chartSku' class='bar-box-tall'></div>
-    <div class='chart-s'>星飞帆卓睿 65 亿（35.7%）、经典星飞帆 43 亿（23.6%）、其余约 73 亿（40.7%，含成人奶粉等其他乳制品 +36.1% 第二曲线）。</div>
-  </div>
-
-  <!-- 出厂价 vs 零售价边界 -->
-  <div class='section tone-warn'>
-    <h2>致命边界：出厂价 ≠ 你付的零售价</h2>
-    <p class='section-desc'>整篇财报都是「工厂卖给经销商的出厂收入」，<b>不是你在母婴店付的 300 元</b>。你付的终端价里，很大一块是经销商、母婴门店、导购提成的利润，这部分钱<b>不进飞鹤营收、不出现在飞鹤财报</b>。</p>
-    <div class='callout warn'>
-      <b>举个行业估算的例子（非财报数据，仅供参考）：</b>一罐星飞帆终端约 300–450 元，飞鹤<b>出厂价约 150–200 元</b>。出厂价 200 元里，生产端直接成本约 53 元（按 26.5% 估算）、毛利约 147 元；而你多付的 100+ 元，主要流向渠道和门店，飞鹤拿不到。
-      <br><br>所以：<b>严禁拿终端 300 元直接套这张 100 元出厂拆分表算成本</b>——那是两套价格体系。
-    </div>
-    <div class='chart-s'>销售费用里大头也不是电视广告，而是母婴店返利、导购激励、线下地推、促销赠品等<b>渠道相关支出</b>。高毛利 ≠ 企业暴利：大量毛利被渠道营销消耗，集团合并净利率仅 11.6%。</div>
-  </div>
-
-  <!-- 给家长的结论 -->
-  <div class='section tone-good'>
-    <h2>葵爸给家长的 4 句大实话</h2>
-    <div class='callout good'>
-      <b>①</b> 飞鹤是中国婴配粉老大，毛利率 65%、婴配粉 73.5%——「贵」有硬成本支撑（研发 + 全产业链自控奶源）。<br>
-      <b>②</b> 但高毛利 ≠ 你多花的钱都进了品质：<b>销售费用率近 40%，营销投入是研发的约 14 倍</b>。<br>
-      <b>③</b> 连龙头 2025 都营收 -12.7%、净利 -45.7%——这行不是「躺赚」，新生儿下滑 + 价格战下谁都扛。<br>
-      <b>④</b> 回归选品逻辑：看配方表 + 宝宝实际适应，别被「贵=好」或「国产老大=闭眼买」绑架。飞鹤适合看重奶源/品牌的家长，但同段位未必比性价比款「值」。
-    </div>
-    <div class='callout warn'>
-      <b>口径红线（务必分清三套口径）：</b>
-      ① <b>集团合并口径</b>：上文 100 元拆分图是集团全业务平均，不是婴配粉单品；
-      ② <b>婴配粉分部口径</b>：毛利率 73.5% → 生产端成本占出厂收入 26.5%（经审计），但单品完整费用/净利率财报不披露；
-      ③ <b>终端零售价</b>：你付的 300 元 ≠ 飞鹤出厂价，渠道利润不进飞鹤财报；
-      ④ 利润率 ≠ 产品质量；研发 5.3 亿为估计值（年报未单列）；本页不构成任何购买或投资推荐。
-    </div>
-  </div>
-
-  <!-- 数据来源 -->
-  <div class='section tone-source'>
-    <h2>📎 数据来源（交易所原文 + 公开报道，均可点击复核）</h2>
-    <p class='section-desc'>被质疑「数据哪来的」，直接甩原链接就能闭环。</p>
-    <div class='src'>
-      <p><span class='tag'>交易所原文</span><b>港交所披露易 · 飞鹤 2025 年报</b>（文件号 2026042801676_c.pdf，2026-04-28 发布）</p>
-      <ul>
-        <li><a href='https://www1.hkexnews.hk/listedco/listconews/sehk/2026/0428/2026042801676_c.pdf' target='_blank'>官方 PDF：https://www1.hkexnews.hk/listedco/listconews/sehk/2026/0428/2026042801676_c.pdf</a></li>
-        <li><b>婴配粉毛利率 73.5% 出处</b>：年报「管理层讨论及分析 → 毛利及毛利率」章节下「按產品類別劃分之毛利及毛利率明細」表，「嬰幼兒配方奶粉產品」行 2025 年毛利率 <b>73.5%</b>（2024 年 71.3%，同比 +2.2pct）。</li>
-        <li><a href='https://php.cnstock.com/news_new/index.php/api/fileview?ID=20260428D8C83442AC3060C76A83B0DC84407B4A&db=news' target='_blank'>可读文字快照（中国证券网抓取港交所原文，可直接看到 73.5% 原表，便于复核）</a></li>
-      </ul>
-      <p><span class='tag'>交易所原文</span><b>港交所披露易 · 飞鹤 2025 年度业绩公告</b>（综合损益表、财务摘要）</p>
-      <ul>
-        <li><a href='https://www1.hkexnews.hk/listedco/listconews/sehk/2026/0326/2026032602611_c.pdf' target='_blank'>https://www1.hkexnews.hk/listedco/listconews/sehk/2026/0326/2026032602611_c.pdf</a></li>
-        <li><a href='https://www1.hkexnews.hk/listedco/listconews/sehk/2026/0326/2026032602610.pdf' target='_blank'>https://www1.hkexnews.hk/listedco/listconews/sehk/2026/0326/2026032602610.pdf</a>（英文版）</li>
-      </ul>
-      <p><span class='tag gray'>公开报道</span><b>华创证券《飞鹤 2025 年报点评》</b>（H1/H2 毛利率、销售费用率、分红率）</p>
-      <ul><li><a href='https://ima.qq.com/wiki/?shareId=a0ff49161357bd4541252febac6d07d94b587db20568088ac9f985e4178ed681' target='_blank'>华创证券年报点评（ima 分享）</a></li></ul>
-      <p><span class='tag gray'>公开报道</span><b>网易 · 飞鹤业绩会</b>（研发投入 5.3 亿、11 种乳蛋白 100% 自产、欧睿连续 7 年第一、大单品金额）</p>
-      <ul><li><a href='https://www.163.com/dy/article/KP271F430519A7HF.html' target='_blank'>https://www.163.com/dy/article/KP271F430519A7HF.html</a></li></ul>
-      <p><span class='tag gray'>公开报道</span><b>东方财富公告 · 飞鹤年报研发章节</b>（科研投入总额 5.3 亿）</p>
-      <ul><li><a href='https://data.eastmoney.com/notices/detail/06186/AN202604281821676021.html' target='_blank'>https://data.eastmoney.com/notices/detail/06186/AN202604281821676021.html</a></li></ul>
-    </div>
-  </div>
-
-  <div class='disclaimer'>
-    免责声明：本页为母婴科普向的财报解读，数据来自港交所公开披露的 2025 年报/业绩公告及公开媒体报道，仅供家长了解行业与消费知情权参考，<b>不构成任何购买建议或投资/股票推荐</b>。利润率、费用率均为报表口径，非终端零售价。文中解读以原始年报为准，如有出入以官方披露信息为准。
-  </div>
+<div class='hero'>
+  <div class='badge'>葵爸 · 财报拆解</div>
+  <h1>中国飞鹤 2025 财报拆解</h1>
+  <p>国产婴配粉龙头 · 数据来自港交所公开年报（2026-04-28 披露）</p>
 </div>
 
+<div class='wrap'>
+
+  <!-- 关键数卡片 -->
+  <div class='section'>
+    <h2>一图看懂关键数（2025 年报审计）</h2>
+    <div class='cards'>
+      <div class='card'><div class='k'>婴配粉毛利率</div><div class='v'>73.5%</div></div>
+      <div class='card'><div class='k'>总收益</div><div class='v'>181.13亿</div></div>
+      <div class='card warn'><div class='k'>营收同比</div><div class='v'>-12.7%</div></div>
+      <div class='card'><div class='k'>婴配粉占比</div><div class='v'>87.6%</div></div>
+      <div class='card'><div class='k'>综合毛利率</div><div class='v'>65.0%</div></div>
+      <div class='card warn'><div class='k'>归母净利</div><div class='v'>19.39亿</div></div>
+    </div>
+    <p class='note'>🟢 数据来源：中国飞鹤（06186.HK）2025 年年度报告（港交所披露，2026-04-28）。婴配粉收入 158.68 亿、毛利 116.65 亿、毛利率 73.5% 均为审计数；归母净利 19.39 亿，同比 −45.68%。年报以人民币列示。</p>
+  </div>
+
+  <!-- 核心图1：每100元拆解 -->
+  <div class='section'>
+    <h2>核心一图：出厂 100 元，飞鹤怎么分</h2>
+    <p class='section-desc'>按 2025 年报费率还原——这是<b>出厂价</b>结构（集团全业务加权平均），<b>不是超市零售价</b>。飞鹤约 88% 收入来自婴配粉，且年报<b>单列婴配粉分部</b>（披露最细）。</p>
+    <div id='chartBreak' class='bar-box'></div>
+    <div class='chart-s'>还原：生产成本 35 元 + 销售费用 40 元 + 管理费用 9 元 + 净利润 11 元 + 其他（研发/财务/所得税净）5 元。飞鹤<b>销售费率约 40%</b>，是典型「高毛利、重营销」高端定位；研发未单列（计入行政开支）。</div>
+  </div>
+
+  <!-- 口径红线 -->
+  <div class='callout'>
+    <b>口径红线：</b>① 以上为<b>报表出厂口径</b>，非终端零售价；② 飞鹤年报<b>单列婴配粉分部</b>（占 87.6%、毛利率 73.5%），披露细于贝因美/澳优；③ 集团加权平均 ≠ 单品；④ 2025 年营收净利双降（行业收缩 + 营销费用居高不下），毛利提升难抵收入下滑；⑤ 利润率 ≠ 产品质量；⑥ 本页不构成任何购买或投资推荐。
+  </div>
+
+  <!-- 图2：三方毛利对比 -->
+  <div class='section'>
+    <h2>飞鹤 / 贝因美 / 澳优：毛利定位差（均为 2025 年报）</h2>
+    <p class='section-desc'>三家上市婴配粉企业毛利定位差异显著：飞鹤高端（综合 65%、婴配粉 73.5%）、贝因美中端（综合 44%、奶粉类 46%）、澳优受奶酪并表拖累（综合 38.6%，羊奶粉本身 51.6%）。</p>
+    <div id='chartGM' class='bar-box'></div>
+    <div class='chart-s'>🟢 飞鹤 2025（综合 65.0% / 婴配粉 73.5%）、🟢 贝因美 2025（综合 43.97% / 奶粉类 45.70%）、🟢 澳优 2025（综合 38.6% / 羊奶粉 51.6%）。</div>
+  </div>
+
+  <!-- 图3：零售价区间 -->
+  <div class='section'>
+    <h2>多平台零售价（家长视角）</h2>
+    <p class='section-desc'>飞鹤主系列到手价区间，来自公开比价平台（非企业披露，仅供横向感知）。高端线定价显著高于中端/羊奶线。</p>
+    <div id='chartPrice' class='bar-box'></div>
+    <div class='chart-s'>🟠 公开比价（什么值得买 / 慢慢买，2025 年券后到手价，800g 段位）：星飞帆卓睿 3 段约 300 元、星飞帆卓耀约 350 元、臻稚有机约 400 元、飞帆约 200 元。同段位价差主要差在渠道与品牌溢价，裸生产成本差异远小于终端价差。</div>
+  </div>
+
+  <!-- 图4：费用率结构 -->
+  <div class='section'>
+    <h2>费用去哪了：重营销</h2>
+    <p class='section-desc'>飞鹤 2025 年费率：销售约 39.5%（71.62 亿）、管理约 9.3%（16.83 亿）、归母净利率 10.7%。研发费用未单列（计入行政开支），绝对值行业估计约 2-3%。</p>
+    <div id='chartCost' class='bar-box'></div>
+    <div class='chart-s'>🟢 数据来源：2025 年报（销售及经销开支 71.62 亿、行政开支 16.83 亿）。飞鹤销售费率明显高于贝因美（28.1%）、澳优（25.7%），与其高端定位和高营销投入一致。</div>
+  </div>
+
+  <!-- 来源区 -->
+  <div class='section'>
+    <h2>数据来源</h2>
+    <p class='section-desc'>核心数据均来自交易所披露原文与权威报道，可点击复核。</p>
+    <ul class='src'>
+      <li><span class='tag green'>年报原文</span><a href='https://php.cnstock.com/news_new/index.php/api/fileview?ID=20260428D8C83442AC3060C76A83B0DC84407B4A&db=news' target='_blank' rel='noopener'>中国飞鹤 2025 年报（巨潮资讯/中证网转载原文）</a></li>
+      <li><span class='tag gray'>权威报道</span><a href='http://dz.jjckb.cn/www/pages/webpage2009/html/2026-04/16/content_115144.htm' target='_blank' rel='noopener'>经济参考报 · 中国飞鹤 2025 年报解读（营收净利双降）</a></li>
+      <li><span class='tag gray'>券商研报</span><a href='https://ima.qq.com/wiki/?shareId=a0ff49161357bd4541252febac6d07d94b587db20568088ac9f985e4178ed681' target='_blank' rel='noopener'>兴业证券 · 中国飞鹤 2025 年报点评（婴配粉分部数据）</a></li>
+      <li><span class='tag warn'>公开比价</span><a href='https://pinpai.smzdm.com/11/youhui/p241' target='_blank' rel='noopener'>什么值得买 · 飞鹤品牌专区（到手价）</a></li>
+      <li><span class='tag green'>对照样本</span><a href='https://tonywsy.github.io/beingmate-financial-review/' target='_blank' rel='noopener'>贝因美婴配粉成本拆解证据页（同系列）</a></li>
+    </ul>
+  </div>
+
+</div>
+
+<footer>本页为家长消费科普，数据来自公开年报与公开比价，非投资建议。口径以交易所原文为准。</footer>
+
 <script>
-// ===== 图1：每100元营收构成（堆叠条）=====
-const breakEl = echarts.init(document.getElementById('chartBreak'));
-const segColor = ['#95a5a6','#E67E22','#bdc3c7','#2980B9','#d5dbdb','#27AE60'];
-const segName = ['生产成本','销售费用','行政开支','研发投入','其他','净利润'];
-const segVal  = [35.0, 39.5, 9.3, 2.9, 1.7, 11.6];
-breakEl.setOption({
-  tooltip:{ trigger:'item', formatter:function(p){ return p.name + '：' + p.value + ' 元（' + (p.value) + '%）'; } },
-  legend:{ data:segName, bottom:0, type:'scroll' },
-  grid:{ left:10, right:10, top:20, bottom:50, containLabel:true },
-  xAxis:{ type:'value', max:100, axisLabel:{ formatter:'{value} 元' } },
-  yAxis:{ type:'category', data:['每 100 元营收'], show:false },
-  series: segName.map((n,i)=>({
-    name:n, type:'bar', stack:'t', barWidth:'45%',
-    itemStyle:{ color:segColor[i] },
-    label:{ show:true, formatter:segVal[i]>=8? n+' '+segVal[i]:'', position:'inside', color:'#fff', fontSize:11 },
-    data:[segVal[i]]
-  }))
-});
-
-// ===== 图2：毛利率 vs 销售费用率 vs 净利率 =====
-const ratesEl = echarts.init(document.getElementById('chartRates'));
-ratesEl.setOption({
-  tooltip:{ trigger:'axis', formatter:'{b}：{c}%' },
-  grid:{ left:50, right:20, top:20, bottom:30 },
-  xAxis:{ type:'category', data:['毛利率','销售费用率','净利率'] },
-  yAxis:{ type:'value', name:'%', max:80 },
-  series:[{ type:'bar', barWidth:'45%',
-    data:[ {value:65.0, itemStyle:{color:'#1E5AA8'}},
-           {value:39.5, itemStyle:{color:'#E67E22'}},
-           {value:11.6, itemStyle:{color:'#27AE60'}} ],
-    label:{ show:true, position:'top', formatter:'{c}%' } }]
-});
-
-// ===== 图3：2025 双降 =====
-const dropEl = echarts.init(document.getElementById('chartDrop'));
-dropEl.setOption({
-  tooltip:{ trigger:'axis', formatter:'{b}<br>{a0}：{c0} 亿<br>{a1}：{c1} 亿' },
-  legend:{ data:['2024','2025'], bottom:0 },
-  grid:{ left:50, right:20, top:20, bottom:40 },
-  xAxis:{ type:'category', data:['营收','归母净利'] },
-  yAxis:{ type:'value', name:'亿元' },
+// ===== 图1：每100元出厂营收拆解（集团口径，费率四舍五入还原）=====
+var breakEl = echarts.init(document.getElementById('chartBreak'));
+var optBreak = {
+  tooltip:{trigger:'axis', axisPointer:{type:'shadow'},
+    formatter:function(p){var s=p[0].name+'<br/>';p.forEach(function(i){s+=i.seriesName+': '+i.value+' 元<br/>';});return s;}},
+  legend:{data:['生产成本','销售费用','管理费用','净利润','其他(研发/财务/所得税)']},
+  grid:{left:60,right:20,top:50,bottom:30},
+  xAxis:{type:'value', max:100, name:'元'},
+  yAxis:{type:'category', data:['每100元营收']},
   series:[
-    { name:'2024', type:'bar', barWidth:'30%', itemStyle:{color:'#bdc3c7'}, data:[207.49, 35.70] },
-    { name:'2025', type:'bar', barWidth:'30%', itemStyle:{color:'#C0392B'}, data:[181.13, 19.39] }
+    {name:'生产成本', type:'bar', stack:'t', data:[35], itemStyle:{color:'#3B6FD0'}},
+    {name:'销售费用', type:'bar', stack:'t', data:[40], itemStyle:{color:'#E8852B'}},
+    {name:'管理费用', type:'bar', stack:'t', data:[9], itemStyle:{color:'#9AA7BE'}},
+    {name:'净利润', type:'bar', stack:'t', data:[11], itemStyle:{color:'#1A4FA0'}},
+    {name:'其他(研发/财务/所得税)', type:'bar', stack:'t', data:[5], itemStyle:{color:'#D9E2F0'}}
   ]
-});
+};
+breakEl.setOption(optBreak);
+window.addEventListener('resize', function(){ breakEl.resize(); });
 
-// ===== 图4：营销 vs 研发 =====
-const rdEl = echarts.init(document.getElementById('chartRd'));
-rdEl.setOption({
-  tooltip:{ trigger:'axis', formatter:'{b}：{c}%' },
-  grid:{ left:50, right:20, top:20, bottom:30 },
-  xAxis:{ type:'category', data:['销售费用率','研发费用率'] },
-  yAxis:{ type:'value', name:'%', max:45 },
-  series:[{ type:'bar', barWidth:'40%',
-    data:[ {value:39.5, itemStyle:{color:'#E67E22'}},
-           {value:2.9, itemStyle:{color:'#2980B9'}} ],
-    label:{ show:true, position:'top', formatter:'{c}%' } }]
-});
+// ===== 图2：三方毛利率对比（均 2025 年报）=====
+var gmEl = echarts.init(document.getElementById('chartGM'));
+var optGM = {
+  tooltip:{trigger:'axis', axisPointer:{type:'shadow'}},
+  grid:{left:60,right:20,top:30,bottom:60},
+  xAxis:{type:'category', data:['飞鹤 综合','飞鹤 婴配粉','贝因美 综合','贝因美 奶粉类','澳优 综合','澳优 羊奶粉']},
+  yAxis:{type:'value', max:80, name:'%'},
+  series:[{type:'bar', barWidth:'40%',
+    data:[{value:65.0,itemStyle:{color:'#1A4FA0'}},{value:73.5,itemStyle:{color:'#3B6FD0'}},
+          {value:43.97,itemStyle:{color:'#E8852B'}},{value:45.70,itemStyle:{color:'#F0A857'}},
+          {value:38.6,itemStyle:{color:'#7A4FB0'}},{value:51.6,itemStyle:{color:'#A77FD6'}}],
+    label:{show:true,position:'top',formatter:'{c}%'}}]
+};
+gmEl.setOption(optGM);
+window.addEventListener('resize', function(){ gmEl.resize(); });
 
-// ===== 图5：大单品结构 =====
-const skuEl = echarts.init(document.getElementById('chartSku'));
-skuEl.setOption({
-  tooltip:{ trigger:'axis', formatter:'{b}：{c} 亿' },
-  grid:{ left:50, right:20, top:20, bottom:30 },
-  xAxis:{ type:'category', data:['星飞帆卓睿','经典星飞帆','其余品类'] },
-  yAxis:{ type:'value', name:'亿元' },
-  series:[{ type:'bar', barWidth:'45%',
-    data:[ {value:65, itemStyle:{color:'#1E5AA8'}},
-           {value:43, itemStyle:{color:'#3498DB'}},
-           {value:73.13, itemStyle:{color:'#bdc3c7'}} ],
-    label:{ show:true, position:'top', formatter:'{c} 亿' } }]
-});
+// ===== 图3：零售价区间（🟠 公开比价）=====
+var priceEl = echarts.init(document.getElementById('chartPrice'));
+var optPrice = {
+  tooltip:{trigger:'axis', axisPointer:{type:'shadow'}},
+  grid:{left:60,right:20,top:30,bottom:30},
+  xAxis:{type:'category', data:['星飞帆卓睿 3段','星飞帆卓耀 3段','臻稚有机 3段','飞帆 3段']},
+  yAxis:{type:'value', name:'元/罐(800g)'},
+  series:[{type:'bar', barWidth:'45%',
+    data:[300,350,400,200],
+    itemStyle:{color:'#1A4FA0'},
+    label:{show:true,position:'top',formatter:'{c}元'}}]
+};
+priceEl.setOption(optPrice);
+window.addEventListener('resize', function(){ priceEl.resize(); });
 
-// ===== 校正：集团 vs 婴配粉 生产端成本率 =====
-const infantEl = echarts.init(document.getElementById('chartInfant'));
-infantEl.setOption({
-  tooltip:{ trigger:'axis', formatter:'{b}：{c}%' },
-  grid:{ left:60, right:20, top:20, bottom:30 },
-  xAxis:{ type:'category', data:['集团整体','婴配粉分部'] },
-  yAxis:{ type:'value', name:'生产端成本率%', max:50 },
-  series:[{ type:'bar', barWidth:'40%',
-    data:[ {value:35.0, itemStyle:{color:'#95a5a6'}},
-           {value:26.5, itemStyle:{color:'#1E5AA8'}} ],
-    label:{ show:true, position:'top', formatter:'{c}%' } }]
-});
+// ===== 图4：费用率结构 =====
+var costEl = echarts.init(document.getElementById('chartCost'));
+var optCost = {
+  tooltip:{trigger:'axis', axisPointer:{type:'shadow'}},
+  grid:{left:60,right:20,top:30,bottom:30},
+  xAxis:{type:'category', data:['销售费用','管理费用','归母净利润']},
+  yAxis:{type:'value', name:'% of 营收'},
+  series:[{type:'bar', barWidth:'45%',
+    data:[{value:39.5,itemStyle:{color:'#E8852B'}},{value:9.3,itemStyle:{color:'#9AA7BE'}},
+          {value:10.7,itemStyle:{color:'#1A4FA0'}}],
+    label:{show:true,position:'top',formatter:'{c}%'}}]
+};
+costEl.setOption(optCost);
+window.addEventListener('resize', function(){ costEl.resize(); });
 
-window.addEventListener('resize', function(){
-  breakEl.resize(); ratesEl.resize(); dropEl.resize(); rdEl.resize(); skuEl.resize(); infantEl.resize();
-});
+// 部署前务必跑 JS 语法自检：node 以 new Function(内联script) 解析，确认 ALL_OK 再上传，
+// 防止双引号截断字符串导致整页崩溃。本页所有 JS 字符串均用单引号。
 </script>
 </body>
 </html>
